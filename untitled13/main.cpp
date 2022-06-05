@@ -1,4 +1,9 @@
-#include "game.cpp"
+#include <iostream>
+#import "game.cpp"
+#include <math.h>
+#include <stdlib.h>
+#include <vector>
+#include <memory>
 
 using namespace std;
 
@@ -6,8 +11,9 @@ int main()
 {
     sf::Clock clock;
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "My window");
 
+        ///PLAYER DECLARATION
     Player player=
     Player(sf::Vector2f(1,1),sf::Vector2f(100,100),sf::Vector2f(300,300));
 
@@ -21,10 +27,10 @@ int main()
 
     player.setOrigin(player.getTextureRect().width/2,player.getTextureRect().height/2);
     sf::Vector2f rotation,MouseCoord;
-    sf::Vector2f dir;                                                   //for player movement
-
+    sf::Vector2f dir;                        //for player movement
+        ///PLAYER DECLARATION END
     //Crosshead
-sf::Sprite crosshead;
+    sf::Sprite crosshead;
 
 ///TO ITERATE OVER BULLETS AND DELETE THEM
 //    std::vector<std::unique_ptr<int>> v;
@@ -42,8 +48,34 @@ sf::Sprite crosshead;
 //The bullets should check individually if they collide with the player,
 //take it out of the vector and take away a life
 
+///BULLETS
+    Bullet bulletE("bulletSpriteSheet.png"); ///IF YOU AREN'T BLAZE CHANGE THIS
+    bulletE.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
+    bulletE.HorizontalSpeed(rand()%100 +300 );
+    bulletE.VerticalSpeed(rand()%100 +300 );
+
+    bulletE.setScale(2.5,2.5);
+
+    bulletE.addAnimationFrame(sf::IntRect(0, 12, 10, 10));
+    bulletE.addAnimationFrame(sf::IntRect(0, 12, 10, 10));
+    bulletE.addAnimationFrame(sf::IntRect(0, 12, 10, 10));
+    bulletE.addAnimationFrame(sf::IntRect(12, 12, 10, 10));
+    bulletE.addAnimationFrame(sf::IntRect(12, 12, 10, 10));
+    bulletE.addAnimationFrame(sf::IntRect(12, 12, 10, 10));
+
+    std::vector<Bullet> bulletsE;  //ALL BULLETS GO HERE
+    bulletsE.emplace_back(bulletE);
 
 
+     for (int i = 0;i<5;i++){
+
+     Bullet bullet1 = bulletE;
+     bulletE.HorizontalSpeed(rand()%100 +300 );
+     bulletE.VerticalSpeed(rand()%100 +300 );
+
+     bulletsE.emplace_back(bullet1);
+
+     };
 
 
     while (window.isOpen())
@@ -57,9 +89,6 @@ sf::Sprite crosshead;
         rotation=sf::Vector2f(MouseCoord.x-player.getPosition().x,
                               MouseCoord.y-player.getPosition().y);
         player.setRotation(90+atan2(rotation.y,rotation.x)*180/3.1415);
-
-
-
 
 
         ///MOVEMENT SECTION
@@ -78,7 +107,6 @@ sf::Sprite crosshead;
                 dir.y=player.Speed_.y;
             else
                 dir.y=-player.Speed_.y;
-
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
@@ -86,7 +114,6 @@ sf::Sprite crosshead;
                 dir.x=-player.Speed_.x;
             else
                 dir.x=player.Speed_.x;
-
         }
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
@@ -95,8 +122,6 @@ sf::Sprite crosshead;
             else
                 dir.x=-player.Speed_.x;
         }
-
-
 
         player.DoMove(elapsed,dir);
         ///END OF MOVEMENT SECTION
@@ -138,9 +163,18 @@ sf::Sprite crosshead;
               }
         }
 
+
         // clear the window with black color
         window.clear(sf::Color::Black);
 
+        ///DRAW BULLETS
+        for(auto &i:bulletsE){
+            i.Move(elapsed);
+            i.ifEdge(sf::Vector2f(window.getSize()));
+            i.Animate(elapsed);
+            window.draw(i);
+         };
+        ///DRAW PLAYER OVER BULLETS
         window.draw(player);
 
 

@@ -1,4 +1,4 @@
-#import<libraries.h>
+#include<libraries.h>
 
 class Player: public sf::Sprite
 {
@@ -40,7 +40,7 @@ public:
 class AnimatedAsset : public sf::Sprite{
 public:
     float up_edge, down_edge, left_edge, right_edge, up, down, left, right, t_;
-    int speedX, speedY, fps_;
+    int speedX, speedY, fps_ = 10;
     unsigned int fragments_index = 0;
     std::vector<sf::IntRect> running_frames;
 
@@ -58,17 +58,18 @@ public:
         right = getGlobalBounds().left+getGlobalBounds().width;
     }
 
-    void ifEdge(){
+    void ifEdge(const sf::Vector2f &screenSize){
 
         setAssetBounds();
 
-        if (up <= 0 || down >= 600){
+        if (up <= 0 || down >= screenSize.y){
             speedY = speedY*-1;
         }
-        if (left <= 0 || right >= 800){
+        if (left <= 0 || right >= screenSize.x){
             speedX = speedX*-1;
         }
     }
+
 
     void VerticalSpeed(const int speed){ speedY = speed; };
 
@@ -78,8 +79,6 @@ public:
         float time = elapsed.asSeconds();
         move (speedX*time,speedY*time);
     }
-
-
 
     void addAnimationFrame(const sf::IntRect& frame)
     {
@@ -107,7 +106,6 @@ public:
         setTextureRect(running_frames[fragments_index]);
     }
 
-
 };
 
 class Bullet : public AnimatedAsset{
@@ -116,16 +114,18 @@ public:
     sf::Texture texture_;
 
     float d_ = 0.0, t_ = 0.0, goalX, goalY;
-    int fps_;
 
-    Bullet(const int fps, const std::string& path): fps_(fps)
+
+    Bullet(  const std::string& path)
     {
         if (!texture_.loadFromFile(path)) {
             std::cerr << "Could not load texture" << std::endl;
         }
         setTexture(texture_);
-        setTextureRect(sf::IntRect(60, 0, 30, 37));
-        setPosition(200,200);
+        setPosition(10,10);
     }
 };
+
+
+
 
