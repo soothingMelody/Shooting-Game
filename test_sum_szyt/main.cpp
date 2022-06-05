@@ -95,7 +95,6 @@ public:
             std::cerr << "Could not load texture" << std::endl;
         }
         setTexture(texture_);
-        setTextureRect(sf::IntRect(60, 0, 30, 37));
         setPosition(200,200);
     }
 
@@ -106,9 +105,11 @@ public:
 int main()
 {
 
+
+
        sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 
-       Bullet bulletE(24,"bulletSpriteSheet.png");
+       Bullet bulletE(24,"C:/Users/agama/Desktop/Szkola/Qt Projects/textures/bulletSpriteSheet.png");
        bulletE.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
        bulletE.HorizontalSpeed(rand()%250 );
        bulletE.VerticalSpeed(rand()%250 );
@@ -127,9 +128,10 @@ int main()
         std::vector<Bullet> bulletsE;
 
         bulletsE.emplace_back(bulletE);
-        Bullet bs = bulletsE[1];
 
- //       for (int g = 0;g<2;g++){std::cout << "Boobahs";};
+        Bullet bs = bulletsE[0];
+
+//       while (g < 2){std::cout << "Boobahs"; g++; };
 
 //        for (int i = 0;i<5;i++){
 
@@ -144,7 +146,6 @@ int main()
 //        for(const auto g: bulletsE){
 //            std::cout << g.speedX << ' ';
 //        }
-
 
 
 
