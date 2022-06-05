@@ -169,16 +169,14 @@ int main()
 
 
 
-           for(int i = 0;i<5;i++){
+           for(auto &i:bulletsE){
 
+           i.Move(elapsed);
+           i.ifEdge();
 
-           bulletsE[i].Move(elapsed);
-           bulletsE[i].ifEdge();
+           i.Animate(elapsed);
 
-           bulletsE[i].Animate(elapsed);
-
-
-           window.draw(bulletsE[i]);
+           window.draw(i);
             };
 
 
