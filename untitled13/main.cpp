@@ -1,4 +1,4 @@
-#import "game.cpp"
+#include "game.cpp"
 
 using namespace std;
 
@@ -41,10 +41,7 @@ sf::Sprite crosshead;
 //    }
 //The bullets should check individually if they collide with the player,
 //take it out of the vector and take away a life
-//Bullet bulletE(24,"C:/Users/agama/Desktop/Szkola/Qt Projects/textures/bulletSpriteSheet.png");
-//bulletE.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
-//bulletE.HorizontalSpeed(rand()%250 );
-//bulletE.VerticalSpeed(rand()%250 );
+
 
 
 
@@ -72,8 +69,6 @@ sf::Sprite crosshead;
         {
             if(player.t_>0)
                 dir.y=-player.Speed_.y;
-            else
-                cerr<<"kjh";
         }
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
