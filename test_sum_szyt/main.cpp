@@ -109,7 +109,7 @@ int main()
 
        sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 
-       Bullet bulletE("C:/Users/agama/Desktop/Szkola/Qt Projects/textures/bulletSpriteSheet.png");
+       Bullet bulletE("bulletSpriteSheet.png"); ///IF YOU AREN'T BLAZE CHANGE THIS
        bulletE.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
        bulletE.HorizontalSpeed(rand()%100 +300 );
        bulletE.VerticalSpeed(rand()%100 +300 );
@@ -141,6 +141,7 @@ int main()
         bulletsE.emplace_back(bullet1);
 
         };
+
 
 
 
