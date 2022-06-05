@@ -148,28 +148,18 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
 
-
-
-            //-----------------------------------------------------------------------------------------------<
             if(event.type==sf::Event::KeyPressed)
             {
 
             }
+
             //if player stops pressing a movement key, stop moving in that direction
             if(event.type==sf::Event::KeyReleased)
             {
-                if(event.key.code==sf::Keyboard::W)
-                {
+                if(event.key.code==sf::Keyboard::W||event.key.code==sf::Keyboard::S)
                     dir.y=0;
-                }
-                if(event.key.code==sf::Keyboard::S)
-                {
-                    dir.y=0;
-                }
                 if(event.key.code==sf::Keyboard::A||event.key.code==sf::Keyboard::D)
-                {
                     dir.x=0;
-                }
             }
             if(event.type == sf::Event::MouseButtonPressed)
               {
