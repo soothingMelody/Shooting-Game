@@ -19,7 +19,8 @@ int main()
 
     player.getExteriorBounds(0,window.getSize().y,0,window.getSize().x);
 
-    sf::Texture playerTXT;                                               //set the texture
+                            //set the texture
+    sf::Texture playerTXT;
     if (!playerTXT.loadFromFile("JennySpriteSheet.png"))
         std::cerr << "Could not load texture" << std::endl;
     player.setTexture(playerTXT);
@@ -29,6 +30,8 @@ int main()
     sf::Vector2f rotation,MouseCoord;
     sf::Vector2f dir;                        //for player movement
         ///PLAYER DECLARATION END
+
+
     //Crosshead
     sf::Sprite crosshead;
     sf::Texture crossTXT;
