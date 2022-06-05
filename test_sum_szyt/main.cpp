@@ -127,8 +127,9 @@ int main()
         std::vector<Bullet> bulletsE;
 
         bulletsE.emplace_back(bulletE);
+        Bullet bs = bulletsE[1];
 
-
+ //       for (int g = 0;g<2;g++){std::cout << "Boobahs";};
 
 //        for (int i = 0;i<5;i++){
 
@@ -143,7 +144,7 @@ int main()
 //        for(const auto g: bulletsE){
 //            std::cout << g.speedX << ' ';
 //        }
-        Bullet bs = bulletsE[1];
+
 
 
 
