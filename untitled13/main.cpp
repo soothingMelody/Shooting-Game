@@ -73,22 +73,22 @@ int main()
     bulletsE.emplace_back(bulletE);
 
     ///BULLETS ALLY
-        Bullet bulletA("bulletSpriteSheet.png");    ///IF YOU AREN'T BLAZE CHANGE THIS
-        bulletA.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
-        bulletA.HorizontalSpeed(rand()%100 +300 );
-        bulletA.VerticalSpeed(rand()%100 +300 );
+    Bullet bulletA("bulletSpriteSheet.png");        ///IF YOU AREN'T BLAZE CHANGE THIS
+    bulletA.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
+    bulletA.HorizontalSpeed(rand()%100 +300 );
+    bulletA.VerticalSpeed(rand()%100 +300 );
 
-        bulletA.setScale(2.5,2.5);
+    bulletA.setScale(2.5,2.5);
 
-        bulletA.addAnimationFrame(sf::IntRect(0, 0, 10, 10));
-        bulletA.addAnimationFrame(sf::IntRect(0, 0, 10, 10));
-        bulletA.addAnimationFrame(sf::IntRect(0, 0, 10, 10));
-        bulletA.addAnimationFrame(sf::IntRect(12, 0, 10, 10));
-        bulletA.addAnimationFrame(sf::IntRect(12, 0, 10, 10));
-        bulletA.addAnimationFrame(sf::IntRect(12, 0, 10, 10));
+    bulletA.addAnimationFrame(sf::IntRect(0, 0, 10, 10));
+    bulletA.addAnimationFrame(sf::IntRect(0, 0, 10, 10));
+    bulletA.addAnimationFrame(sf::IntRect(0, 0, 10, 10));
+    bulletA.addAnimationFrame(sf::IntRect(12, 0, 10, 10));
+    bulletA.addAnimationFrame(sf::IntRect(12, 0, 10, 10));
+    bulletA.addAnimationFrame(sf::IntRect(12, 0, 10, 10));
 
-        std::vector<Bullet> bulletsA;  //ALL ALLY BULLETS GO HERE
-        bulletsA.emplace_back(bulletA);
+    std::vector<Bullet> bulletsA;  //ALL ALLY BULLETS GO HERE
+    bulletsA.emplace_back(bulletA);
 
 
     int b =0;
@@ -103,6 +103,10 @@ int main()
         MouseCoord=window.mapPixelToCoords(sf::Mouse::getPosition());
         rotation=sf::Vector2f(MouseCoord.x-player.getPosition().x,
                               MouseCoord.y-player.getPosition().y);
+        rotation=sf::Vector2f(rotation.x/sqrt(pow(rotation.x,2)+pow(rotation.y,2)),
+                              rotation.y/sqrt(pow(rotation.x,2)+pow(rotation.y,2)));
+
+
         //ANGLE OF ROTATION
         float angle=90+atan2(rotation.y,rotation.x)*180/3.1415;
         player.setRotation(angle);
@@ -155,7 +159,6 @@ int main()
         }
         else {
             b++;
-            std::cout << b << ' ';
         }
 
         // check all the window's events that were triggered since the last iteration of the loop
@@ -184,12 +187,12 @@ int main()
               {
                   if(event.mouseButton.button == sf::Mouse::Left)
                   {
-                      Bullet bullet2 = bulletA;
-                      bulletA.HorizontalSpeed(rand()%600 -300 );
-                      bulletA.VerticalSpeed(rand()%600 -300 );
-                      bullet2.setPosition(player.getPosition());
+                        //multiply the rotation by the speed of bullet
+                      bulletA.HorizontalSpeed(100*rotation.x);
+                      bulletA.VerticalSpeed(100*rotation.y);
+                      bulletA.setPosition(player.getPosition());
 
-                      bulletsA.emplace_back(bullet2);
+                      bulletsA.emplace_back(bulletA);
                   }
               }
         }

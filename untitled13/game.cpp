@@ -116,7 +116,7 @@ public:
     float d_ = 0.0, t_ = 0.0, goalX, goalY;
 
 
-    Bullet(  const std::string& path)
+    Bullet(const std::string& path)
     {
         if (!texture_.loadFromFile(path)) {
             std::cerr << "Could not load texture" << std::endl;
