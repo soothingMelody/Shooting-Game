@@ -187,9 +187,9 @@ int main()
                       Bullet bullet2 = bulletA;
                       bulletA.HorizontalSpeed(rand()%600 -300 );
                       bulletA.VerticalSpeed(rand()%600 -300 );
+                      bullet2.setPosition(player.getPosition());
 
                       bulletsA.emplace_back(bullet2);
-                      bullet2.setPosition(player.getPosition());
                   }
               }
         }
