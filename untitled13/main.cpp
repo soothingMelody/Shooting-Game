@@ -1,9 +1,4 @@
-#include <iostream>
 #import "game.cpp"
-#include <math.h>
-#include <stdlib.h>
-#include <vector>
-#include <memory>
 
 using namespace std;
 

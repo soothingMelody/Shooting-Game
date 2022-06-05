@@ -1,5 +1,4 @@
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
+#import<libraries.h>
 
 class Player: public sf::Sprite
 {
