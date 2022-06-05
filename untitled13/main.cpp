@@ -170,6 +170,9 @@ int main()
         // clear the window with black color
         window.clear(sf::Color::Black);
 
+        ///DRAW PLAYER UNDER BULLETS
+        window.draw(player);
+
         ///DRAW BULLETS
         for(auto &i:bulletsE){
             i.Move(elapsed);
@@ -177,8 +180,7 @@ int main()
             i.Animate(elapsed);
             window.draw(i);
          };
-        ///DRAW PLAYER OVER BULLETS
-        window.draw(player);
+
 
 
         // end the current frame
