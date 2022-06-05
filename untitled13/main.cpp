@@ -69,28 +69,34 @@ sf::Sprite crosshead;
         {
             if(player.t_>0)
                 dir.y=-player.Speed_.y;
+            else
+                dir.y=player.Speed_.y;
         }
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
             if(player.b_<player.BttScr)
                 dir.y=player.Speed_.y;
+            else
+                dir.y=-player.Speed_.y;
+
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
             if(player.l_>0)
                 dir.x=-player.Speed_.x;
+            else
+                dir.x=player.Speed_.x;
+
         }
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             if(player.r_<player.RgtScr)
                 dir.x=player.Speed_.x;
+            else
+                dir.x=-player.Speed_.x;
         }
 
-        //if it's at the edges, make the speed in that direction 0
-        if(player.t_<=0||player.b_>=player.BttScr)
-            dir.y=0;
-        if(player.l_<=0||player.r_>=player.RgtScr)
-            dir.x=0;
+
 
         player.DoMove(elapsed,dir);
         ///END OF MOVEMENT SECTION
