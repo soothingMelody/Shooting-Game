@@ -54,7 +54,7 @@ int main()
 //The bullets should check individually if they collide with the player,
 //take it out of the vector and take away a life
 
-///BULLETS
+///BULLETS ENEMY
     Bullet bulletE("bulletSpriteSheet.png");    ///IF YOU AREN'T BLAZE CHANGE THIS
     bulletE.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
     bulletE.HorizontalSpeed(rand()%100 +300 );
@@ -69,8 +69,26 @@ int main()
     bulletE.addAnimationFrame(sf::IntRect(12, 12, 10, 10));
     bulletE.addAnimationFrame(sf::IntRect(12, 12, 10, 10));
 
-    std::vector<Bullet> bulletsE;  //ALL BULLETS GO HERE
+    std::vector<Bullet> bulletsE;  //ALL ENEMY BULLETS GO HERE
     bulletsE.emplace_back(bulletE);
+
+    ///BULLETS ALLY
+        Bullet bulletA("bulletSpriteSheet.png");    ///IF YOU AREN'T BLAZE CHANGE THIS
+        bulletA.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
+        bulletA.HorizontalSpeed(rand()%100 +300 );
+        bulletA.VerticalSpeed(rand()%100 +300 );
+
+        bulletA.setScale(2.5,2.5);
+
+        bulletA.addAnimationFrame(sf::IntRect(0, 0, 10, 10));
+        bulletA.addAnimationFrame(sf::IntRect(0, 0, 10, 10));
+        bulletA.addAnimationFrame(sf::IntRect(0, 0, 10, 10));
+        bulletA.addAnimationFrame(sf::IntRect(12, 0, 10, 10));
+        bulletA.addAnimationFrame(sf::IntRect(12, 0, 10, 10));
+        bulletA.addAnimationFrame(sf::IntRect(12, 0, 10, 10));
+
+        std::vector<Bullet> bulletsA;  //ALL ALLY BULLETS GO HERE
+        bulletsA.emplace_back(bulletA);
 
 
     int b =0;
@@ -132,6 +150,7 @@ int main()
             bulletE.VerticalSpeed(rand()%100 +300 );
 
             bulletsE.emplace_back(bullet1);
+            bullet1.setPosition(10,10);
             b=0;
         }
         else {
@@ -165,7 +184,12 @@ int main()
               {
                   if(event.mouseButton.button == sf::Mouse::Left)
                   {
+                      Bullet bullet2 = bulletA;
+                      bulletA.HorizontalSpeed(rand()%600 -300 );
+                      bulletA.VerticalSpeed(rand()%600 -300 );
 
+                      bulletsA.emplace_back(bullet2);
+                      bullet2.setPosition(player.getPosition());
                   }
               }
         }
@@ -177,10 +201,17 @@ int main()
         ///DRAW PLAYER UNDER BULLETS
         window.draw(player);
 
-        ///DRAW BULLETS
+        ///DRAW ENEMY BULLETS
         for(auto &i:bulletsE){
             i.Move(elapsed);
             i.ifEdge(sf::Vector2f(window.getSize()));
+            i.Animate(elapsed);
+            window.draw(i);
+         }
+
+        ///DRAW ALLY BULLETS
+        for(auto &i:bulletsA){
+            i.Move(elapsed);
             i.Animate(elapsed);
             window.draw(i);
          }

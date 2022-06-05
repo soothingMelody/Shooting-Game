@@ -122,7 +122,6 @@ public:
             std::cerr << "Could not load texture" << std::endl;
         }
         setTexture(texture_);
-        setPosition(10,10);
     }
 };
 
