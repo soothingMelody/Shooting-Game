@@ -19,7 +19,8 @@ int main()
 
     player.getExteriorBounds(0,window.getSize().y,0,window.getSize().x);
 
-    sf::Texture playerTXT;                                               //set the texture
+                            //set the texture
+    sf::Texture playerTXT;
     if (!playerTXT.loadFromFile("JennySpriteSheet.png"))
         std::cerr << "Could not load texture" << std::endl;
     player.setTexture(playerTXT);
@@ -29,8 +30,13 @@ int main()
     sf::Vector2f rotation,MouseCoord;
     sf::Vector2f dir;                        //for player movement
         ///PLAYER DECLARATION END
+
+
     //Crosshead
     sf::Sprite crosshead;
+    sf::Texture crossTXT;
+    if (!crossTXT.loadFromFile("crosshead.png"))
+        std::cerr << "Could not load texture" << std::endl;
 
 ///TO ITERATE OVER BULLETS AND DELETE THEM
 //    std::vector<std::unique_ptr<int>> v;
@@ -49,7 +55,7 @@ int main()
 //take it out of the vector and take away a life
 
 ///BULLETS
-    Bullet bulletE("bulletSpriteSheet.png"); ///IF YOU AREN'T BLAZE CHANGE THIS
+    Bullet bulletE("bulletSpriteSheet.png");    ///IF YOU AREN'T BLAZE CHANGE THIS
     bulletE.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
     bulletE.HorizontalSpeed(rand()%100 +300 );
     bulletE.VerticalSpeed(rand()%100 +300 );
@@ -67,7 +73,7 @@ int main()
     bulletsE.emplace_back(bulletE);
 
 
-    int b = 0;
+
     while (window.isOpen())
     {
         window.setFramerateLimit(60);
@@ -81,6 +87,7 @@ int main()
         //ANGLE OF ROTATION
         float angle=90+atan2(rotation.y,rotation.x)*180/3.1415;
         player.setRotation(angle);
+        crosshead.setPosition(MouseCoord);
 
 
         ///MOVEMENT SECTION
@@ -173,6 +180,9 @@ int main()
         // clear the window with black color
         window.clear(sf::Color::Black);
 
+        ///DRAW PLAYER UNDER BULLETS
+        window.draw(player);
+
         ///DRAW BULLETS
         for(auto &i:bulletsE){
             i.Move(elapsed);
@@ -180,9 +190,8 @@ int main()
             i.Animate(elapsed);
             window.draw(i);
          };
-        ///DRAW PLAYER OVER BULLETS
-        window.draw(player);
 
+        window.draw(crosshead);
 
         // end the current frame
         window.display();
