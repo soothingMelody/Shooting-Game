@@ -15,7 +15,7 @@ int main()
 
         ///PLAYER DECLARATION
     Player player=
-    Player(sf::Vector2f(1,1),sf::Vector2f(100,100),sf::Vector2f(300,300));
+    Player(sf::Vector2f(1,1),sf::Vector2f(1000,500),sf::Vector2f(300,300));
 
     player.getExteriorBounds(0,window.getSize().y,0,window.getSize().x);
 
@@ -67,17 +67,7 @@ int main()
     bulletsE.emplace_back(bulletE);
 
 
-     for (int i = 0;i<5;i++){
-
-     Bullet bullet1 = bulletE;
-     bulletE.HorizontalSpeed(rand()%100 +300 );
-     bulletE.VerticalSpeed(rand()%100 +300 );
-
-     bulletsE.emplace_back(bullet1);
-
-     };
-
-
+    int b = 0;
     while (window.isOpen())
     {
         window.setFramerateLimit(60);
@@ -136,6 +126,20 @@ int main()
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            if (b==500){
+                Bullet bullet1 = bulletE;
+                bulletE.HorizontalSpeed(rand()%100 +300 );
+                bulletE.VerticalSpeed(rand()%100 +300 );
+
+                bulletsE.emplace_back(bullet1);
+                b=0;
+            }
+            else {
+                b++;
+            }
+
+            //-----------------------------------------------------------------------------------------------<
             if(event.type==sf::Event::KeyPressed)
             {
 
