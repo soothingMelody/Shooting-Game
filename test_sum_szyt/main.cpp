@@ -9,7 +9,7 @@
 class AnimatedAsset : public sf::Sprite{
 public:
     float up_edge, down_edge, left_edge, right_edge, up, down, left, right, t_;
-    int speedX, speedY, fps_;
+    int speedX, speedY, fps_ = 10;
     unsigned int fragments_index = 0;
     std::vector<sf::IntRect> running_frames;
 
@@ -87,9 +87,9 @@ public:
     sf::Texture texture_;
 
     float d_ = 0.0, t_ = 0.0, goalX, goalY;
-    int fps_;
 
-    Bullet(const int fps, const std::string& path): fps_(fps)
+
+    Bullet(  const std::string& path)
     {
         if (!texture_.loadFromFile(path)) {
             std::cerr << "Could not load texture" << std::endl;
@@ -109,7 +109,7 @@ int main()
 
        sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 
-       Bullet bulletE(24,"C:/Users/agama/Desktop/Szkola/Qt Projects/textures/bulletSpriteSheet.png");
+       Bullet bulletE("C:/Users/agama/Desktop/Szkola/Qt Projects/textures/bulletSpriteSheet.png");
        bulletE.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
        bulletE.HorizontalSpeed(rand()%250 );
        bulletE.VerticalSpeed(rand()%250 );
@@ -129,23 +129,24 @@ int main()
 
         bulletsE.emplace_back(bulletE);
 
-        Bullet bs = bulletsE[0];
 
-//       while (g < 2){std::cout << "Boobahs"; g++; };
 
-//        for (int i = 0;i<5;i++){
 
-//        Bullet bulletE1 = bulletE;
-//        bulletE1.HorizontalSpeed(rand()%250 );
-//        bulletE1.VerticalSpeed(rand()%250 );
+        for (int i = 0;i<5;i++){
 
-//        bulletsE.emplace_back(bulletE1);
+        Bullet bullet1 = bulletE;
+        bullet1.HorizontalSpeed(rand()%250 );
+        bullet1.VerticalSpeed(rand()%250 );
 
-//        };
+        bulletsE.emplace_back(bullet1);
 
-//        for(const auto g: bulletsE){
-//            std::cout << g.speedX << ' ';
-//        }
+        };
+
+        for( auto g: bulletsE){
+            std::cout << g.speedX << ' ';
+        }
+
+               Bullet bs = bulletsE[1];
 
 
 
@@ -181,13 +182,13 @@ int main()
            window.draw(bulletE);
 
 
-//           bs.Move(elapsed);
-//           bs.ifEdge();
+           bs.Move(elapsed);
+           bs.ifEdge();
 
-//           bs.Animate(elapsed);
+           bs.Animate(elapsed);
 
 
-//           window.draw(bs);
+           window.draw(bs);
 
 
 
