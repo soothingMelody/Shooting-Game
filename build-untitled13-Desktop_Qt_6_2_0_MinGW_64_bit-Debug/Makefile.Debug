@@ -101,7 +101,7 @@ compiler_clean:
 
 ####### Compile
 
-debug/main.o: ../untitled13/main.cpp 
+debug/main.o: ../untitled13/main.cpp ../untitled13/game.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\untitled13\main.cpp
 
 ####### Install
