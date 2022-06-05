@@ -93,6 +93,7 @@ int main()
         player.setRotation(angle);
 
 
+
         ///MOVEMENT SECTION
         //we use different ifs so we can move diagonally
         //outside of Events to move smoothly
