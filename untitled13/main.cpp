@@ -88,7 +88,9 @@ int main()
         MouseCoord=window.mapPixelToCoords(sf::Mouse::getPosition());
         rotation=sf::Vector2f(MouseCoord.x-player.getPosition().x,
                               MouseCoord.y-player.getPosition().y);
-        player.setRotation(90+atan2(rotation.y,rotation.x)*180/3.1415);
+        //ANGLE OF ROTATION
+        float angle=90+atan2(rotation.y,rotation.x)*180/3.1415;
+        player.setRotation(angle);
 
 
         ///MOVEMENT SECTION
