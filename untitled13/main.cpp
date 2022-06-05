@@ -73,6 +73,7 @@ int main()
     bulletsE.emplace_back(bulletE);
 
 
+    int b =0;
 
     while (window.isOpen())
     {
@@ -144,6 +145,7 @@ int main()
             }
             else {
                 b++;
+                std::cout << b << ' ';
             }
 
             //-----------------------------------------------------------------------------------------------<
