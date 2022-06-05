@@ -126,27 +126,29 @@ int main()
         player.DoMove(elapsed,dir);
         ///END OF MOVEMENT SECTION
 
+        if (b==100){
+            Bullet bullet1 = bulletE;
+            bulletE.HorizontalSpeed(rand()%100 +300 );
+            bulletE.VerticalSpeed(rand()%100 +300 );
+
+            bulletsE.emplace_back(bullet1);
+            b=0;
+        }
+        else {
+            b++;
+            std::cout << b << ' ';
+        }
 
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
         while (window.pollEvent(event))
         {
+
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            if (b==500){
-                Bullet bullet1 = bulletE;
-                bulletE.HorizontalSpeed(rand()%100 +300 );
-                bulletE.VerticalSpeed(rand()%100 +300 );
 
-                bulletsE.emplace_back(bullet1);
-                b=0;
-            }
-            else {
-                b++;
-                std::cout << b << ' ';
-            }
 
             if(event.type==sf::Event::KeyPressed)
             {
