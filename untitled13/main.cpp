@@ -31,6 +31,9 @@ int main()
         ///PLAYER DECLARATION END
     //Crosshead
     sf::Sprite crosshead;
+    sf::Texture crossTXT;
+    if (!crossTXT.loadFromFile("crosshead.png"))
+        std::cerr << "Could not load texture" << std::endl;
 
 ///TO ITERATE OVER BULLETS AND DELETE THEM
 //    std::vector<std::unique_ptr<int>> v;
@@ -49,7 +52,7 @@ int main()
 //take it out of the vector and take away a life
 
 ///BULLETS
-    Bullet bulletE("bulletSpriteSheet.png"); ///IF YOU AREN'T BLAZE CHANGE THIS
+    Bullet bulletE("bulletSpriteSheet.png");    ///IF YOU AREN'T BLAZE CHANGE THIS
     bulletE.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
     bulletE.HorizontalSpeed(rand()%100 +300 );
     bulletE.VerticalSpeed(rand()%100 +300 );
@@ -69,13 +72,13 @@ int main()
 
      for (int i = 0;i<5;i++){
 
-     Bullet bullet1 = bulletE;
-     bulletE.HorizontalSpeed(rand()%100 +300 );
-     bulletE.VerticalSpeed(rand()%100 +300 );
+         Bullet bullet1 = bulletE;
+         bulletE.HorizontalSpeed(rand()%100 +300 );
+         bulletE.VerticalSpeed(rand()%100 +300 );
 
-     bulletsE.emplace_back(bullet1);
+         bulletsE.emplace_back(bullet1);
 
-     };
+     }
 
 
     while (window.isOpen())
@@ -91,7 +94,7 @@ int main()
         //ANGLE OF ROTATION
         float angle=90+atan2(rotation.y,rotation.x)*180/3.1415;
         player.setRotation(angle);
-
+        crosshead.setPosition(MouseCoord);
 
 
         ///MOVEMENT SECTION
@@ -181,7 +184,7 @@ int main()
             window.draw(i);
          };
 
-
+        window.draw(crosshead);
 
         // end the current frame
         window.display();
