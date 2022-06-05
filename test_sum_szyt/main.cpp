@@ -142,7 +142,7 @@ int main()
 
         };
 
-        for( auto g: bulletsE){
+        for( auto &g: bulletsE){
             std::cout << g.speedX << ' ';
         }
 
