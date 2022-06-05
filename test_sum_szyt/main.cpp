@@ -95,7 +95,7 @@ public:
             std::cerr << "Could not load texture" << std::endl;
         }
         setTexture(texture_);
-        setPosition(200,200);
+        setPosition(10,10);
     }
 
 
@@ -111,12 +111,12 @@ int main()
 
        Bullet bulletE("C:/Users/agama/Desktop/Szkola/Qt Projects/textures/bulletSpriteSheet.png");
        bulletE.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
-       bulletE.HorizontalSpeed(rand()%250 );
-       bulletE.VerticalSpeed(rand()%250 );
+       bulletE.HorizontalSpeed(rand()%100 +300 );
+       bulletE.VerticalSpeed(rand()%100 +300 );
 
        sf::Clock clock;
 
-       bulletE.setScale(10,10);
+       bulletE.setScale(2.5,2.5);
 
            bulletE.addAnimationFrame(sf::IntRect(0, 12, 10, 10));
            bulletE.addAnimationFrame(sf::IntRect(0, 12, 10, 10));
@@ -135,18 +135,13 @@ int main()
         for (int i = 0;i<5;i++){
 
         Bullet bullet1 = bulletE;
-        bullet1.HorizontalSpeed(rand()%250 );
-        bullet1.VerticalSpeed(rand()%250 );
+        bulletE.HorizontalSpeed(rand()%100 +300 );
+        bulletE.VerticalSpeed(rand()%100 +300 );
 
         bulletsE.emplace_back(bullet1);
 
         };
 
-        for( auto g: bulletsE){
-            std::cout << g.speedX << ' ';
-        }
-
-               Bullet bs = bulletsE[1];
 
 
 
@@ -173,23 +168,17 @@ int main()
 
 
 
-           bulletE.Move(elapsed);
-           bulletE.ifEdge();
-
-           bulletE.Animate(elapsed);
+           for(int i = 0;i<5;i++){
 
 
-           window.draw(bulletE);
+           bulletsE[i].Move(elapsed);
+           bulletsE[i].ifEdge();
+
+           bulletsE[i].Animate(elapsed);
 
 
-           bs.Move(elapsed);
-           bs.ifEdge();
-
-           bs.Animate(elapsed);
-
-
-           window.draw(bs);
-
+           window.draw(bulletsE[i]);
+            };
 
 
 
