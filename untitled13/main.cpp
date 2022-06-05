@@ -189,7 +189,7 @@ int main()
             i.ifEdge(sf::Vector2f(window.getSize()));
             i.Animate(elapsed);
             window.draw(i);
-         };
+         }
 
         window.draw(crosshead);
 
