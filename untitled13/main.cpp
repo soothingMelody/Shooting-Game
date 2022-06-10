@@ -237,7 +237,8 @@ int main()
                         //multiply the rotation by the speed of bullet
                       bulletA.HorizontalSpeed(400*rotation.x);
                       bulletA.VerticalSpeed(400*rotation.y);
-                      bulletA.setPosition(player.getPosition());
+                      bulletA.setPosition(player.getPosition().x+(player.getTextureRect().width/2),
+                                          player.getPosition().y);
                       shootSound.play();
 
                       bulletsA.emplace_back(std::make_unique<Bullet>(bulletA));;

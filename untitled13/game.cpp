@@ -113,9 +113,6 @@ public:
 
     sf::Texture texture_;
 
-    float d_ = 0.0, t_ = 0.0, goalX, goalY;
-
-
     Bullet(const std::string& path)
     {
         if (!texture_.loadFromFile(path)) {
