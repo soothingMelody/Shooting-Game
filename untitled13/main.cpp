@@ -104,30 +104,14 @@ int main()
             three.setTexture(heart);
             three.setScale(2.5,2.5);
 
-    if(player.lives == 3){
+
         one.setPosition(1820,980);
         two.setPosition(1730,980);
         three.setPosition(1640,980);
 
-    }
-    else if(player.lives == 2){
-        one.setPosition(1820,980);
-        two.setPosition(1730,980);
-        three.setPosition(2000,2000);
 
-    }
-    else if(player.lives == 1){
-        one.setPosition(1820,980);
-        two.setPosition(2000,2000);
-        three.setPosition(2000,2000);
 
-    }
-    else if(player.lives == 0){
-        one.setPosition(2000,2000);
-        two.setPosition(2000,2000);
-        three.setPosition(2000,2000);
 
-    }
 
 ///MUSIC______________
     sf::Music music;
@@ -398,9 +382,18 @@ int main()
             (*i).Animate(elapsed);
             window.draw(*i);
          }
-        window.draw(one);
-        window.draw(two);
+        if(player.lives == 3){
         window.draw(three);
+        window.draw(two);
+        window.draw(one);
+        }
+        else if(player.lives == 2){
+        window.draw(two);
+        window.draw(one);
+        }
+        else if(player.lives == 1){
+        window.draw(one);
+        }
 
         window.draw(crosshead);
 
