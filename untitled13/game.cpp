@@ -1,42 +1,6 @@
 #include<libraries.h>
 
-class Player: public sf::Sprite
-{
-public:
-    float TopScr,BttScr,LftScr,RgtScr,t_,b_,l_,r_;  //limits for collisions
-    sf::Vector2f Speed_;
-    int lives;
 
-    Player(sf::Vector2f size, sf::Vector2f position, sf::Vector2f velocity)
-    {
-        scale(size);
-        setPosition(position);
-        Speed_=velocity;
-    }
-    void setInteriorBounds()        //we save the bounds of the sprite
-    {
-        t_=getGlobalBounds().top;
-        b_=getGlobalBounds().top+getGlobalBounds().height;
-        l_=getGlobalBounds().left;
-        r_=getGlobalBounds().left+getGlobalBounds().width;
-
-    }
-    //we save the bounds of the screen
-    ///WE CALL IT ON THE MAIN
-    void getExteriorBounds(const double &t, const double &b, const double &l, const double &r)
-    {
-        TopScr=t;
-        BttScr=b;
-        LftScr=l;
-        RgtScr=r;
-    }
-    void DoMove(const sf::Time &elapsed, const sf::Vector2f &speed)
-    {
-        setInteriorBounds();
-        move(speed.x*elapsed.asSeconds(),speed.y*elapsed.asSeconds());  //we apply the x-y movement
-    }
-
-};
 class AnimatedAsset : public sf::Sprite{
 public:
     float up_edge, down_edge, left_edge, right_edge, up, down, left, right, t_;
@@ -107,6 +71,46 @@ public:
     }
 
 };
+
+
+class Player: public AnimatedAsset
+{
+public:
+    float TopScr,BttScr,LftScr,RgtScr,t_,b_,l_,r_;  //limits for collisions
+    sf::Vector2f Speed_;
+    int lives;
+
+    Player(sf::Vector2f size, sf::Vector2f position, sf::Vector2f velocity)
+    {
+        scale(size);
+        setPosition(position);
+        Speed_=velocity;
+    }
+    void setInteriorBounds()        //we save the bounds of the sprite
+    {
+        t_=getGlobalBounds().top;
+        b_=getGlobalBounds().top+getGlobalBounds().height;
+        l_=getGlobalBounds().left;
+        r_=getGlobalBounds().left+getGlobalBounds().width;
+
+    }
+    //we save the bounds of the screen
+    ///WE CALL IT ON THE MAIN
+    void getExteriorBounds(const double &t, const double &b, const double &l, const double &r)
+    {
+        TopScr=t;
+        BttScr=b;
+        LftScr=l;
+        RgtScr=r;
+    }
+    void DoMove(const sf::Time &elapsed, const sf::Vector2f &speed)
+    {
+        setInteriorBounds();
+        move(speed.x*elapsed.asSeconds(),speed.y*elapsed.asSeconds());  //we apply the x-y movement
+    }
+
+};
+
 
 class Bullet : public AnimatedAsset{
 public:
