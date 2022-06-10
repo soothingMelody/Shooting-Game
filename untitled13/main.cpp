@@ -90,6 +90,45 @@ int main()
     std::vector<std::unique_ptr<Bullet>> bulletsA;  //ALL ALLY BULLETS GO HERE
     bulletsA.emplace_back(std::make_unique<Bullet>(bulletA));
 
+///LIVES
+
+    sf::Texture heart;
+            if (!heart.loadFromFile("heart.png")) {
+                std::cerr << "Could not load texture" << std::endl;
+            }
+            sf::Sprite one;
+            one.setTexture(heart);
+            one.setScale(2.5,2.5);
+
+
+            sf::Sprite two = one;
+            sf::Sprite three = one;
+
+    if(player.lives == 3){
+        one.setPosition(1820,980);
+        two.setPosition(1730,980);
+        three.setPosition(1640,980);
+
+    }
+    else if(player.lives == 2){
+        one.setPosition(1820,980);
+        two.setPosition(1730,980);
+        three.setPosition(2000,2000);
+
+    }
+    else if(player.lives == 1){
+        one.setPosition(1820,980);
+        two.setPosition(2000,2000);
+        three.setPosition(2000,2000);
+
+    }
+    else if(player.lives == 0){
+        one.setPosition(2000,2000);
+        two.setPosition(2000,2000);
+        three.setPosition(2000,2000);
+
+    }
+
 ///MUSIC______________
     sf::Music music;
     if (!music.openFromFile("DigitalOne.ogg"))
@@ -336,7 +375,9 @@ int main()
             (*i).Animate(elapsed);
             window.draw(*i);
          }
-
+        window.draw(one);
+        window.draw(two);
+        window.draw(three);
 
         window.draw(crosshead);
 

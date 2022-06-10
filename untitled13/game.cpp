@@ -78,7 +78,7 @@ class Player: public AnimatedAsset
 public:
     float TopScr,BttScr,LftScr,RgtScr,t_,b_,l_,r_;  //limits for collisions
     sf::Vector2f Speed_;
-    int lives;
+    int lives = 3;
 
     Player(sf::Vector2f size, sf::Vector2f position, sf::Vector2f velocity)
     {
@@ -133,6 +133,7 @@ public:
             {
                 t=true;
                 v.erase(i);
+
             }
             else i++;
         }
