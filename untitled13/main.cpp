@@ -275,7 +275,19 @@ int main()
               }
         }
 
-        /// ITERATE OVER BULLETS OUTSIDE THE WINDOW AND DELETE THEM
+/// BULLETS HIT THE PLAYER, TAKE A LIVE AND DESTROY
+
+        for (auto i = bulletsE.begin(); i != bulletsE.end();)
+        {
+            if((**i).getGlobalBounds().intersects(player.getGlobalBounds()))
+            {
+                player.lives--;
+                bulletsE.erase(i);
+            }
+            else i++;
+        }
+
+/// ITERATE OVER BULLETS OUTSIDE THE WINDOW AND DELETE THEM
 
         for (auto i = bulletsA.begin(); i != bulletsA.end();)
             {
@@ -286,7 +298,7 @@ int main()
                 else
                     i++;          //advance in the vector
             }
-        ///__________________________
+///__________________________
 
         // clear the window with black color
         window.clear(sf::Color::Black);
