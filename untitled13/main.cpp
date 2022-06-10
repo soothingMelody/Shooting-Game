@@ -167,8 +167,8 @@ int main()
 
 
 ///MOVEMENT SECTION
-        //we use different ifs so we can move diagonally
-        //outside of Events to move smoothly
+        //we use different "if" statements so we can move diagonally
+        //and outside of Events to move smoothly
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
             if(player.t_>0)
@@ -241,13 +241,15 @@ int main()
               {
                   if(event.mouseButton.button == sf::Mouse::Left)
                   {
-                        //multiply the rotation by the speed of bullet
+                      //multiply the rotation by the speed of bullet
                       bulletA.HorizontalSpeed(400*rotation.x);
                       bulletA.VerticalSpeed(400*rotation.y);
 
+                      //place the bullets at the tip of the gun
                       sf::Vector2f d = rad*rotation;
                       bulletA.setPosition(player.getPosition()+d);
                       shootSound.play();
+
                       bulletsA.emplace_back(std::make_unique<Bullet>(bulletA));;
                   }
               }
@@ -255,17 +257,25 @@ int main()
 
 /// BULLETS HIT THE PLAYER, TAKE A LIVE AND DESTROY
 
-        for (auto i = bulletsE.begin(); i != bulletsE.end();)
-        {
-            if((**i).getGlobalBounds().intersects(player.getGlobalBounds()))
-            {
-                player.lives--;
-                bulletsE.erase(i);
-            }
-            else i++;
-        }
+ //        for (auto j = bulletsA.begin(); j != bulletsA.end();)
+//        {
+//            for(auto i = bulletsE.begin(); i != bulletsE.end();)
+//            {
+//                //if player's bullets hit enemy bullets
+//                if((**j).getGlobalBounds().intersects((**i).getGlobalBounds()))
+//                {
+//                    bulletsA.erase(j);
+//                    bulletsE.erase(i);
+//                }
+//                else
+//                {
+//                    i++;
+//                }
+//            }
+//            j++;
+//        }
 
-/// ITERATE OVER BULLETS OUTSIDE THE WINDOW AND DELETE THEM
+/// CHECK THE BULLETS OUTSIDE THE WINDOW AND DELETE THEM
 
         for (auto i = bulletsA.begin(); i != bulletsA.end();)
             {
