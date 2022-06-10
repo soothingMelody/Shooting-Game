@@ -253,7 +253,18 @@ int main()
               }
         }
 
-        /// ITERATE OVER BULLETS OUTSIDE THE WINDOW AND DELETE THEM
+
+        for (auto i = bulletsE.begin(); i != bulletsE.end();)
+        {
+            if((**i).getGlobalBounds().intersects(player.getGlobalBounds()))
+            {
+                player.lives--;
+                bulletsE.erase(i);
+            }
+            else i++;
+        }
+
+/// ITERATE OVER BULLETS OUTSIDE THE WINDOW AND DELETE THEM
 
         for (auto i = bulletsA.begin(); i != bulletsA.end();)
             {
