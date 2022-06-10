@@ -268,13 +268,13 @@ int main()
             bulletE.VerticalSpeed(rand()%100 +300 );
 
             bulletsE.emplace_back(std::make_unique<Bullet>(bulletE));
-            bulletE.setPosition(10,10);
+            bulletE.setPosition(rand()%1880,10);
 
             bulletE.HorizontalSpeed(rand()%100 +300 );
             bulletE.VerticalSpeed(rand()%100 +300 );
 
             bulletsE.emplace_back(std::make_unique<Bullet>(bulletE));
-            bulletE.setPosition(1880,1020);
+            bulletE.setPosition(rand()%1880,1020);
         }
         else {
             b++;
@@ -284,13 +284,13 @@ int main()
             bulletE.VerticalSpeed(rand()%100 +300 );
 
             bulletsE.emplace_back(std::make_unique<Bullet>(bulletE));
-            bulletE.setPosition(10,1020);
+            bulletE.setPosition(10,rand()%1070);
             b=0;
             bulletE.HorizontalSpeed(rand()%100 +300 );
             bulletE.VerticalSpeed(rand()%100 +300 );
 
             bulletsE.emplace_back(std::make_unique<Bullet>(bulletE));
-            bulletE.setPosition(1880,10);
+            bulletE.setPosition(1880,rand()%1070);
         }
         else {
             b++;
@@ -346,6 +346,7 @@ int main()
             {
                 bulletsE.erase(i);
                 player.lives--;
+                std::cout << player.lives << ' ';
             }
             else
             {
@@ -355,8 +356,9 @@ int main()
 /// BULLETS COLLIDE BETWEEN EACH OTHER
         for (auto j = bulletsA.begin(); j != bulletsA.end();)
         {
-            if((**j).checkCollisions(bulletsE,(**j)))
+            if((**j).checkCollisions(bulletsE,(**j))){
                 bulletsA.erase(j);
+                player.score++;}
             else j++;
         }
 
@@ -406,7 +408,7 @@ int main()
         window.display();
 
     }
-
+std::cout << "/n Your score was: " << player.score << std::endl;
 
     return 0;
 }
