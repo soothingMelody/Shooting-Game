@@ -89,28 +89,24 @@ int main()
     bulletsA.emplace_back(std::make_unique<Bullet>(bulletA));
 
 ///LIVES
-
     sf::Texture heart;
-            if (!heart.loadFromFile("heart.png")) {
-                std::cerr << "Could not load texture" << std::endl;
-            }
-            sf::Sprite one;
-            sf::Sprite two;
-            sf::Sprite three;
-            one.setTexture(heart);
-            one.setScale(2.5,2.5);
-            two.setTexture(heart);
-            two.setScale(2.5,2.5);
-            three.setTexture(heart);
-            three.setScale(2.5,2.5);
+    if (!heart.loadFromFile("heart.png")) {
+        std::cerr << "Could not load texture" << std::endl;
+    }
+    sf::Sprite one;
+    sf::Sprite two;
+    sf::Sprite three;
+    one.setTexture(heart);
+    one.setScale(2.5,2.5);
+    two.setTexture(heart);
+    two.setScale(2.5,2.5);
+    three.setTexture(heart);
+    three.setScale(2.5,2.5);
 
-
-        one.setPosition(1820,980);
-        two.setPosition(1730,980);
-        three.setPosition(1640,980);
-
-
-
+    one.setPosition(1820,980);
+    two.setPosition(1730,980);
+    three.setPosition(1640,980);
+///__________________________
 
 
 ///MUSIC______________
@@ -159,14 +155,37 @@ int main()
     gameoverSound.setVolume(40); //Use this to set the volume (0-100)
 ///__________________________
 
-    int b =0;
+///GAME OVER
+    sf::Font font;
+    if (!font.loadFromFile("ka1.ttf"))
+    {
+        std::cerr << "Could not load font" << std::endl;
+    }
+    sf::Text text;
+    text.setFont(font);
+    text.setCharacterSize(50); // in pixels
+    text.setFillColor(sf::Color::Cyan);
+    text.setStyle(sf::Text::Bold);
+    text.setPosition(2*window.getSize().x/5,3*window.getSize().y/4);
+
+    sf::Sprite end;
+    sf::Texture gameTXT;
+    if (!gameTXT.loadFromFile("Game_Over.png")) {
+        std::cerr << "Could not load texture" << std::endl;
+    }
+    end.setTexture(gameTXT);
+    end.setScale(3,3);
+    end.setPosition(window.getSize().x/4,window.getSize().y/4);
+
+///__________________________
+
+    int b =0;       //timer for bullets spawn
 
     while (window.isOpen())
     {
         window.setFramerateLimit(60);
         srand(time(NULL));
         sf::Time elapsed = clock.restart();
-
 
         //CALCULATE ROTATION FOLLOWING MOUSE
         MouseCoord = window.mapPixelToCoords(sf::Mouse::getPosition());
@@ -175,7 +194,6 @@ int main()
         //turn to unit vector
         rotation = sf::Vector2f(rotation.x/sqrt(pow(rotation.x,2)+pow(rotation.y,2)),
                               rotation.y/sqrt(pow(rotation.x,2)+pow(rotation.y,2)));
-
 
         //ANGLE OF ROTATION
         float angle = 90+atan2(rotation.y,rotation.x)*180/3.1415;
@@ -221,7 +239,7 @@ int main()
                 dir.x=-player.Speed_.x;
         }
 
-        player.DoMove(elapsed,dir);
+        player.DoMove(elapsed,dir);     //move the player
 
 
 ///PLAYER ANIMATION
@@ -233,7 +251,6 @@ int main()
            player.addAnimationFrame(sf::IntRect(160, 0, 79, 79));
            player.addAnimationFrame(sf::IntRect(160, 0, 79, 79));
            player.addAnimationFrame(sf::IntRect(160, 0, 79, 79));
-
        }
        else{
            player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
@@ -242,8 +259,6 @@ int main()
            player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
            player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
            player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
-
-
        }
 ///__________________________
 
@@ -330,20 +345,17 @@ int main()
             {
                 bulletsE.erase(i);
                 player.lives--;
-                std::cout << player.lives << ' ';
             }
-            else
-            {
-                i++;
-            }
+            else i++;        //advance in the vector
         }
 /// BULLETS COLLIDE BETWEEN EACH OTHER
         for (auto j = bulletsA.begin(); j != bulletsA.end();)
         {
             if((**j).checkCollisions(bulletsE,(**j))){
                 bulletsA.erase(j);
-                player.score++;}
-            else j++;
+                player.score++;
+            }
+            else j++;       //advance in the vector
         }
 
 /// CHECK THE BULLETS OUTSIDE THE WINDOW AND DELETE THEM
@@ -354,8 +366,7 @@ int main()
                      ((**i).getPosition().x <= 0 || (**i).getPosition().x >= (**i).right_edge)){
                     bulletsA.erase(i);
                 }
-                else
-                    i++;          //advance in the vector
+                else i++;          //advance in the vector
             }
 ///__________________________
 
@@ -382,17 +393,26 @@ int main()
             (*i).Animate(elapsed);
             window.draw(*i);
          }
+///DRAW HEARTS
         if(player.lives == 3){
-        window.draw(three);
-        window.draw(two);
-        window.draw(one);
+            window.draw(three);
+            window.draw(two);
+            window.draw(one);
         }
         else if(player.lives == 2){
-        window.draw(two);
-        window.draw(one);
+            window.draw(two);
+            window.draw(one);
         }
         else if(player.lives == 1){
-        window.draw(one);
+            window.draw(one);
+        }
+        else if (player.lives<=0)
+        {
+            player.Speed_=sf::Vector2f(0,0);
+            player.setPosition(-100,-100);
+            text.setString("Score   "+ to_string(player.score));
+            window.draw(text);
+            window.draw(end);
         }
 
         window.draw(crosshead);
@@ -401,7 +421,6 @@ int main()
         window.display();
 
     }
-std::cout << "/n Your score was: " << player.score << std::endl;
 
     return 0;
 }
