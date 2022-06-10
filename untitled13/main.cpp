@@ -345,6 +345,7 @@ int main()
             {
                 bulletsE.erase(i);
                 player.lives--;
+                deathSound.play();
             }
             else i++;        //advance in the vector
         }
@@ -354,6 +355,7 @@ int main()
             if((**j).checkCollisions(bulletsE,(**j))){
                 bulletsA.erase(j);
                 player.score++;
+                bulletDeathSound.play();
             }
             else j++;       //advance in the vector
         }
