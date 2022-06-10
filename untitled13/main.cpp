@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 
+
 using namespace std;
 
 int main()
@@ -90,7 +91,51 @@ int main()
     std::vector<Bullet> bulletsA;  //ALL ALLY BULLETS GO HERE
     bulletsA.emplace_back(bulletA);
 
+    ///MUSIC______________
+    sf::Music music;
+    if (!music.openFromFile("DigitalOne.ogg"))
+        return -1; // error
+    music.play();
+    music.setLoop(1);
+    music.setVolume(50);
+    ///__________________________
 
+    ///SFX
+    // To play SFX anywhere, just put down:
+    // "play.(name of the sound variable)() in the if or while statement.
+
+    //Firing Sound - for firing the player's cannon.
+    sf::SoundBuffer buffer;
+    if (!buffer.loadFromFile("fire.ogg"))
+            return -1; //Returns an error, if the audio file is missing
+    sf::Sound shootSound;
+    shootSound.setBuffer(buffer);
+    shootSound.setVolume(40); //Use this to set the volume (0-100)
+
+    //BulletDeath Sound - for when the player bullet and enemy bullet collide.
+    sf::SoundBuffer buffer2;
+    if (!buffer2.loadFromFile("bulletdeath.ogg"))
+            return -1; //Returns an error, if the audio file is missing
+    sf::Sound bulletDeathSound;
+    bulletDeathSound.setBuffer(buffer2);
+    bulletDeathSound.setVolume(40); //Use this to set the volume (0-100)
+
+    //Death Sound - for when the player loses a life.
+    sf::SoundBuffer buffer3;
+    if (!buffer3.loadFromFile("death.ogg"))
+            return -1; //Returns an error, if the audio file is missing
+    sf::Sound deathSound;
+    deathSound.setBuffer(buffer3);
+    deathSound.setVolume(40); //Use this to set the volume (0-100)
+
+    //Game Over Sound - for when the player loses all lives.
+    sf::SoundBuffer buffer4;
+    if (!buffer4.loadFromFile("gameover.ogg"))
+            return -1; //Returns an error, if the audio file is missing
+    sf::Sound gameoverSound;
+    gameoverSound.setBuffer(buffer4);
+    gameoverSound.setVolume(40); //Use this to set the volume (0-100)
+    ///__________________________
     int b =0;
 
     while (window.isOpen())
@@ -98,6 +143,8 @@ int main()
         window.setFramerateLimit(60);
         srand(time(NULL));
         sf::Time elapsed = clock.restart();
+
+
 
         //CALCULATE ROTATION FOLLOWING MOUSE
         MouseCoord=window.mapPixelToCoords(sf::Mouse::getPosition());
@@ -182,6 +229,7 @@ int main()
                     dir.y=0;
                 if(event.key.code==sf::Keyboard::A||event.key.code==sf::Keyboard::D)
                     dir.x=0;
+
             }
             if(event.type == sf::Event::MouseButtonPressed)
               {
@@ -191,6 +239,7 @@ int main()
                       bulletA.HorizontalSpeed(100*rotation.x);
                       bulletA.VerticalSpeed(100*rotation.y);
                       bulletA.setPosition(player.getPosition());
+                      shootSound.play();
 
                       bulletsA.emplace_back(bulletA);
                   }
