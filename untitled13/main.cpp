@@ -253,6 +253,7 @@ int main()
               }
         }
 
+/// BULLETS HIT THE PLAYER, TAKE A LIVE AND DESTROY
 
         for (auto i = bulletsE.begin(); i != bulletsE.end();)
         {
@@ -275,7 +276,7 @@ int main()
                 else
                     i++;          //advance in the vector
             }
-        ///__________________________
+///__________________________
 
         // clear the window with black color
         window.clear(sf::Color::Black);
