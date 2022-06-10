@@ -34,20 +34,23 @@ int main()
     player.setTextureRect(sf::IntRect(0,0,63,89));
 
     player.setOrigin(player.getTextureRect().width/2,player.getTextureRect().height/2);
+
+    //radius of rotation
+    float rad=sqrt(pow(player.getTextureRect().width-player.getOrigin().x,2)+
+                                     pow(player.getTextureRect().height-player.getOrigin().y,2));
+
     sf::Vector2f rotation,MouseCoord;
     sf::Vector2f dir;                        //for player movement
 ///__________________________
 
 ///CROSSHEAD
     sf::Sprite crosshead;
-    crosshead.setScale(1,1);
+    crosshead.setScale(1.5,1.5);
     sf::Texture crossTXT;
     if (!crossTXT.loadFromFile("crosshead.png"))
         std::cerr << "Could not load texture" << std::endl;
     crosshead.setTexture(crossTXT);
-    crosshead.setOrigin(crosshead.getTextureRect().width/2,crosshead.getTextureRect().height/2);
-
-    window.setMouseCursorVisible(false);
+    crosshead.setOrigin(crosshead.getTextureRect().width/2,crosshead.getTextureRect().height);
 
 ///__________________________
 
@@ -74,8 +77,8 @@ int main()
     bulletA.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
     bulletA.HorizontalSpeed(rand()%100 +300 );
     bulletA.VerticalSpeed(rand()%100 +300 );
-
     bulletA.setScale(2.5,2.5);
+    bulletA.setOrigin(bulletA.getTextureRect().width/2,bulletA.getTextureRect().height/2);
 
     bulletA.addAnimationFrame(sf::IntRect(0, 0, 10, 10));
     bulletA.addAnimationFrame(sf::IntRect(0, 0, 10, 10));
@@ -144,8 +147,8 @@ int main()
 
         //CALCULATE ROTATION FOLLOWING MOUSE
         MouseCoord = window.mapPixelToCoords(sf::Mouse::getPosition());
-        rotation = sf::Vector2f(MouseCoord.x-player.getPosition().x,
-                              MouseCoord.y-player.getPosition().y);
+        rotation = sf::Vector2f((crosshead.getPosition().x)-player.getPosition().x,
+                              (crosshead.getPosition().y)-player.getPosition().y);
         //turn to unit vector
         rotation = sf::Vector2f(rotation.x/sqrt(pow(rotation.x,2)+pow(rotation.y,2)),
                               rotation.y/sqrt(pow(rotation.x,2)+pow(rotation.y,2)));
@@ -156,6 +159,7 @@ int main()
         player.setRotation(angle);
         crosshead.setPosition(MouseCoord);
 
+        //HIDE CURSOR
         if (MouseCoord.y <= 20)     //to see when closing the window
             window.setMouseCursorVisible(true);
         else
@@ -208,9 +212,6 @@ int main()
         else {
             b++;
         }
-        //emptyVector(bulletsE);
-
-
 
 
         // check all the window's events that were triggered since the last iteration of the loop
@@ -243,10 +244,10 @@ int main()
                         //multiply the rotation by the speed of bullet
                       bulletA.HorizontalSpeed(400*rotation.x);
                       bulletA.VerticalSpeed(400*rotation.y);
-                      bulletA.setPosition(player.getPosition().x+(player.getTextureRect().width/2),
-                                          player.getPosition().y);
-                      shootSound.play();
 
+                      sf::Vector2f d = rad*rotation;
+                      bulletA.setPosition(player.getPosition()+d);
+                      shootSound.play();
                       bulletsA.emplace_back(std::make_unique<Bullet>(bulletA));;
                   }
               }
