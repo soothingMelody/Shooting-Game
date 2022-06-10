@@ -41,12 +41,12 @@ int main()
         std::cerr << "Could not load texture" << std::endl;
     crosshead.setTexture(crossTXT);
     crosshead.setOrigin(crosshead.getTextureRect().width/2,crosshead.getTextureRect().height/2);
-        //maybe change mouse icon instead
-    sf::Cursor cursor;
-   // cursor.loadFromPixels("crosshead.png",sf::Vector2f(1,1),
-                          //sf::Vector2f(crossTXT.getSize().x/2,crossTXT.getSize().y/2));
-    if (cursor.loadFromSystem(sf::Cursor::Arrow))
-        window.setMouseCursor(cursor);
+
+    window.setMouseCursorVisible(false);
+
+
+
+
 
 ///TO ITERATE OVER BULLETS AND DELETE THEM
 //    std::vector<std::unique_ptr<int>> v;
@@ -145,6 +145,7 @@ int main()
     gameoverSound.setBuffer(buffer4);
     gameoverSound.setVolume(40); //Use this to set the volume (0-100)
     ///__________________________
+
     int b =0;
 
     while (window.isOpen())
@@ -152,7 +153,6 @@ int main()
         window.setFramerateLimit(60);
         srand(time(NULL));
         sf::Time elapsed = clock.restart();
-
 
 
         //CALCULATE ROTATION FOLLOWING MOUSE
@@ -168,6 +168,11 @@ int main()
         float angle=90+atan2(rotation.y,rotation.x)*180/3.1415;
         player.setRotation(angle);
         crosshead.setPosition(MouseCoord);
+
+        if (MouseCoord.y <= 20)     //to see when closing the window
+            window.setMouseCursorVisible(true);
+        else
+            window.setMouseCursorVisible(false);
 
 
 
@@ -247,8 +252,8 @@ int main()
                   if(event.mouseButton.button == sf::Mouse::Left)
                   {
                         //multiply the rotation by the speed of bullet
-                      bulletA.HorizontalSpeed(100*rotation.x);
-                      bulletA.VerticalSpeed(100*rotation.y);
+                      bulletA.HorizontalSpeed(400*rotation.x);
+                      bulletA.VerticalSpeed(400*rotation.y);
                       bulletA.setPosition(player.getPosition());
                       shootSound.play();
 
@@ -261,8 +266,7 @@ int main()
         // clear the window with black color
         window.clear(sf::Color::Black);
 
-        ///DRAW PLAYER UNDER BULLETS
-        window.draw(player);
+
 
         ///DRAW ENEMY BULLETS
         for(auto &i:bulletsE){
@@ -271,6 +275,8 @@ int main()
             i.Animate(elapsed);
             window.draw(i);
          }
+        ///DRAW PLAYER UNDER ENEMY BULLETS
+        window.draw(player);
 
         ///DRAW ALLY BULLETS
         for(auto &i:bulletsA){
