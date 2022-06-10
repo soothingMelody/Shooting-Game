@@ -14,6 +14,15 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "My window");
 
+
+    ///Background Shenanigans
+    sf::Sprite back;
+    sf::Texture backTXT;
+    if (!backTXT.loadFromFile("bg.png"))
+        std::cerr << "Could not load texture" << std::endl;
+    back.setTexture(backTXT);
+    back.setScale(1.2, 1.2);
+
         ///PLAYER DECLARATION
     Player player=
     Player(sf::Vector2f(1,1),sf::Vector2f(1000,500),sf::Vector2f(300,300));
@@ -143,6 +152,7 @@ int main()
         sf::Time elapsed = clock.restart();
 
 
+
         //CALCULATE ROTATION FOLLOWING MOUSE
         MouseCoord = window.mapPixelToCoords(sf::Mouse::getPosition());
         rotation = sf::Vector2f(MouseCoord.x-player.getPosition().x,
@@ -252,8 +262,8 @@ int main()
 
         // clear the window with black color
         window.clear(sf::Color::Black);
-
-
+        ///Draw Background
+        window.draw(back);
 
         ///DRAW ENEMY BULLETS
         for(auto &i:bulletsE){

@@ -145,5 +145,14 @@ void emptyVector(std::vector<std::unique_ptr<Bullet>> v)
     }
 }
 
-
+void moveBackground(sf::View &view , const sf::Time &elapsed){
+    int x = 1 * elapsed.asSeconds(); int y = 1.5 * elapsed.asSeconds();
+    if (y <= 1200){
+        y = y*-1;
+    }
+    if (x <= 1200){
+        x = x*-1;
+    }
+    view.move(x, y);
+}
 
