@@ -209,7 +209,7 @@ int main()
            player.addAnimationFrame(sf::IntRect(160, 0, 79, 79));
            player.addAnimationFrame(sf::IntRect(160, 0, 79, 79));
            player.addAnimationFrame(sf::IntRect(160, 0, 79, 79));
-           std::cout << "idzie" << ' ';
+
        }
        else{
            player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
@@ -218,7 +218,7 @@ int main()
            player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
            player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
            player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
-           std::cout << "stoi" << ' ';
+
 
        }
 ///__________________________
