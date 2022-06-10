@@ -22,14 +22,14 @@ public:
         right = getGlobalBounds().left+getGlobalBounds().width;
     }
 
-    void ifEdge(const sf::Vector2f &screenSize){
+    void ifEdge(){
 
         setAssetBounds();
 
-        if (up <= 0 || down >= screenSize.y){
+        if (up <= 0 || down >= 1080){
             speedY = speedY*-1;
         }
-        if (left <= 0 || right >= screenSize.x){
+        if (left <= 0 || right >= 1920){
             speedX = speedX*-1;
         }
     }

@@ -57,8 +57,8 @@ int main()
 ///BULLETS ENEMY
     Bullet bulletE("bulletSpriteSheet.png");    ///IF YOU AREN'T BLAZE CHANGE THIS
     bulletE.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
-    bulletE.HorizontalSpeed(rand()%100 +300 );
-    bulletE.VerticalSpeed(rand()%100 +300 );
+    bulletE.HorizontalSpeed(rand()%100 +500 );
+    bulletE.VerticalSpeed(rand()%100 +500 );
 
     bulletE.setScale(2.5,2.5);
 
@@ -75,8 +75,6 @@ int main()
 ///BULLETS ALLY
     Bullet bulletA("bulletSpriteSheet.png");        ///IF YOU AREN'T BLAZE CHANGE THIS
     bulletA.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
-    bulletA.HorizontalSpeed(rand()%100 +300 );
-    bulletA.VerticalSpeed(rand()%100 +300 );
     bulletA.setScale(2.5,2.5);
     bulletA.setOrigin(bulletA.getTextureRect().width/2,bulletA.getTextureRect().height/2);
 
@@ -97,12 +95,14 @@ int main()
                 std::cerr << "Could not load texture" << std::endl;
             }
             sf::Sprite one;
+            sf::Sprite two;
+            sf::Sprite three;
             one.setTexture(heart);
             one.setScale(2.5,2.5);
-
-
-            sf::Sprite two = one;
-            sf::Sprite three = one;
+            two.setTexture(heart);
+            two.setScale(2.5,2.5);
+            three.setTexture(heart);
+            three.setScale(2.5,2.5);
 
     if(player.lives == 3){
         one.setPosition(1820,980);
@@ -263,13 +263,34 @@ int main()
        }
 ///__________________________
 
-        if (b==100){            //every 100 frames, spawn another bullet
+        if (b==100){            //every 100 frames, spawn more bullets
             bulletE.HorizontalSpeed(rand()%100 +300 );
             bulletE.VerticalSpeed(rand()%100 +300 );
 
             bulletsE.emplace_back(std::make_unique<Bullet>(bulletE));
             bulletE.setPosition(10,10);
+
+            bulletE.HorizontalSpeed(rand()%100 +300 );
+            bulletE.VerticalSpeed(rand()%100 +300 );
+
+            bulletsE.emplace_back(std::make_unique<Bullet>(bulletE));
+            bulletE.setPosition(1880,1020);
+        }
+        else {
+            b++;
+        }
+        if (b==150){            //every 150 frames, spawn more bullets
+            bulletE.HorizontalSpeed(rand()%100 +300 );
+            bulletE.VerticalSpeed(rand()%100 +300 );
+
+            bulletsE.emplace_back(std::make_unique<Bullet>(bulletE));
+            bulletE.setPosition(10,1020);
             b=0;
+            bulletE.HorizontalSpeed(rand()%100 +300 );
+            bulletE.VerticalSpeed(rand()%100 +300 );
+
+            bulletsE.emplace_back(std::make_unique<Bullet>(bulletE));
+            bulletE.setPosition(1880,10);
         }
         else {
             b++;
@@ -304,8 +325,8 @@ int main()
                   if(event.mouseButton.button == sf::Mouse::Left)
                   {
                       //multiply the rotation by the speed of bullet
-                      bulletA.HorizontalSpeed(400*rotation.x);
-                      bulletA.VerticalSpeed(400*rotation.y);
+                      bulletA.HorizontalSpeed(1400*rotation.x);
+                      bulletA.VerticalSpeed(1400*rotation.y);
 
                       //place the bullets at the tip of the gun
                       sf::Vector2f d = rad*rotation;
@@ -361,7 +382,7 @@ int main()
 ///DRAW ENEMY BULLETS
         for(auto &i:bulletsE){
             (*i).Move(elapsed);
-            (*i).ifEdge(sf::Vector2f(window.getSize()));
+            (*i).ifEdge();
             (*i).Animate(elapsed);
             window.draw(*i);
          }
