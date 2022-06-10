@@ -32,11 +32,15 @@ int main()
         ///PLAYER DECLARATION END
 
 
-    //Crosshead
+    ///CROSSHEAD
     sf::Sprite crosshead;
+    crosshead.setScale(1,1);
     sf::Texture crossTXT;
     if (!crossTXT.loadFromFile("crosshead.png"))
         std::cerr << "Could not load texture" << std::endl;
+    crosshead.setTexture(crossTXT);
+    crosshead.setOrigin(crosshead.getTextureRect().width/2,crosshead.getTextureRect().height/2);
+
 
 ///TO ITERATE OVER BULLETS AND DELETE THEM
 //    std::vector<std::unique_ptr<int>> v;
@@ -100,10 +104,11 @@ int main()
         sf::Time elapsed = clock.restart();
 
         //CALCULATE ROTATION FOLLOWING MOUSE
-        MouseCoord=window.mapPixelToCoords(sf::Mouse::getPosition());
-        rotation=sf::Vector2f(MouseCoord.x-player.getPosition().x,
+        MouseCoord = window.mapPixelToCoords(sf::Mouse::getPosition());
+        rotation = sf::Vector2f(MouseCoord.x-player.getPosition().x,
                               MouseCoord.y-player.getPosition().y);
-        rotation=sf::Vector2f(rotation.x/sqrt(pow(rotation.x,2)+pow(rotation.y,2)),
+        //turn to unit vector
+        rotation = sf::Vector2f(rotation.x/sqrt(pow(rotation.x,2)+pow(rotation.y,2)),
                               rotation.y/sqrt(pow(rotation.x,2)+pow(rotation.y,2)));
 
 
@@ -111,6 +116,7 @@ int main()
         float angle=90+atan2(rotation.y,rotation.x)*180/3.1415;
         player.setRotation(angle);
         crosshead.setPosition(MouseCoord);
+
 
 
         ///MOVEMENT SECTION
