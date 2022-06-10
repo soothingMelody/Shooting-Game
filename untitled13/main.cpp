@@ -292,23 +292,13 @@ int main()
                 i++;
             }
         }
- //        for (auto j = bulletsA.begin(); j != bulletsA.end();)
-//        {
-//            for(auto i = bulletsE.begin(); i != bulletsE.end();)
-//            {
-//                //if player's bullets hit enemy bullets
-//                if((**j).getGlobalBounds().intersects((**i).getGlobalBounds()))
-//                {
-//                    bulletsA.erase(j);
-//                    bulletsE.erase(i);
-//                }
-//                else
-//                {
-//                    i++;
-//                }
-//            }
-//            j++;
-//        }
+/// BULLETS COLLIDE BETWEEN EACH OTHER
+        for (auto j = bulletsA.begin(); j != bulletsA.end();)
+        {
+            if((**j).checkCollisions(bulletsE,(**j)))
+                bulletsA.erase(j);
+            else j++;
+        }
 
 /// CHECK THE BULLETS OUTSIDE THE WINDOW AND DELETE THEM
 

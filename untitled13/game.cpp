@@ -124,7 +124,20 @@ public:
         }
         setTexture(texture_);
     }
-
+    bool checkCollisions(std::vector<std::unique_ptr<Bullet>>  &v, Bullet b)
+    {
+        bool t=false;
+        for (auto i = v.begin(); i != v.end();)
+        {
+            if(b.getGlobalBounds().intersects((**i).getGlobalBounds()))
+            {
+                t=true;
+                v.erase(i);
+            }
+            else i++;
+        }
+        return t;
+    }
 
 };
 
