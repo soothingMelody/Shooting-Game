@@ -349,6 +349,7 @@ int main()
             }
             else i++;        //advance in the vector
         }
+
 /// BULLETS COLLIDE BETWEEN EACH OTHER
         for (auto j = bulletsA.begin(); j != bulletsA.end();)
         {
@@ -370,7 +371,7 @@ int main()
                 }
                 else i++;          //advance in the vector
             }
-///__________________________
+
 
         // clear the window with black color
         window.clear(sf::Color::Black);
@@ -408,7 +409,7 @@ int main()
         else if(player.lives == 1){
             window.draw(one);
         }
-        else if (player.lives<=0)
+        else if (player.lives<=0)       ///GAME OVER
         {
             bulletsA.clear();
             bulletsE.clear();
@@ -417,6 +418,8 @@ int main()
             text.setString("Score   "+ to_string(player.score));
             window.draw(text);
             window.draw(end);
+            if(player.lives==0)            gameoverSound.play();
+            player.lives--; //to not repeat the gameoverSound
         }
 
         window.draw(crosshead);
