@@ -262,7 +262,7 @@ int main()
        }
 ///__________________________
 
-        if (b==100){            //every 100 frames, spawn more bullets
+        if (b==100 &&player.lives>0){            //every 100 frames, spawn more bullets
             bulletE.HorizontalSpeed(rand()%100 +300 );
             bulletE.VerticalSpeed(rand()%100 +300 );
 
@@ -278,7 +278,7 @@ int main()
         else {
             b++;
         }
-        if (b==150){            //every 150 frames, spawn more bullets
+        if (b==150 && player.lives>0){            //every 150 frames, spawn more bullets
             bulletE.HorizontalSpeed(rand()%100 +300 );
             bulletE.VerticalSpeed(rand()%100 +300 );
 
@@ -321,7 +321,7 @@ int main()
             }
             if(event.type == sf::Event::MouseButtonPressed)
               {
-                  if(event.mouseButton.button == sf::Mouse::Left)
+                  if(event.mouseButton.button == sf::Mouse::Left &&player.lives>0)
                   {
                       //multiply the rotation by the speed of bullet
                       bulletA.HorizontalSpeed(1400*rotation.x);
@@ -383,7 +383,7 @@ int main()
             (*i).Move(elapsed);
             (*i).ifEdge();
             (*i).Animate(elapsed);
-            window.draw(*i);
+             window.draw(*i);
          }
 ///DRAW PLAYER UNDER ENEMY BULLETS
         player.Animate(elapsed);
@@ -410,8 +410,10 @@ int main()
         }
         else if (player.lives<=0)
         {
-            player.Speed_=sf::Vector2f(0,0);
-            player.setPosition(-100,-100);
+            bulletsA.clear();
+            bulletsE.clear();
+            player.Speed_ = sf::Vector2f(0,0);
+            player.setPosition(-100,-100);      //take the player out of the screen
             text.setString("Score   "+ to_string(player.score));
             window.draw(text);
             window.draw(end);
