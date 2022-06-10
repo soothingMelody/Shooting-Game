@@ -14,16 +14,7 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "My window");
 
-
-    ///Background Shenanigans
-    sf::Sprite back;
-    sf::Texture backTXT;
-    if (!backTXT.loadFromFile("bg.png"))
-        std::cerr << "Could not load texture" << std::endl;
-    back.setTexture(backTXT);
-    back.setScale(1.2, 1.2);
-
-        ///PLAYER DECLARATION
+///PLAYER DECLARATION
     Player player=
     Player(sf::Vector2f(1,1),sf::Vector2f(1000,500),sf::Vector2f(300,300));
 
@@ -39,10 +30,9 @@ int main()
     player.setOrigin(player.getTextureRect().width/2,player.getTextureRect().height/2);
     sf::Vector2f rotation,MouseCoord;
     sf::Vector2f dir;                        //for player movement
-        ///PLAYER DECLARATION END
+///__________________________
 
-
-    ///CROSSHEAD
+///CROSSHEAD
     sf::Sprite crosshead;
     crosshead.setScale(1,1);
     sf::Texture crossTXT;
@@ -53,13 +43,7 @@ int main()
 
     window.setMouseCursorVisible(false);
 
-
-
-
-
-
-//The bullets should check individually if they collide with the player,
-//take it out of the vector and take away a life
+///__________________________
 
 ///BULLETS ENEMY
     Bullet bulletE("bulletSpriteSheet.png");    ///IF YOU AREN'T BLAZE CHANGE THIS
@@ -79,7 +63,7 @@ int main()
     std::vector<std::unique_ptr<Bullet>> bulletsE;  //ALL ENEMY BULLETS GO HERE
     bulletsE.emplace_back(std::make_unique<Bullet>(bulletE));
 
-    ///BULLETS ALLY
+///BULLETS ALLY
     Bullet bulletA("bulletSpriteSheet.png");        ///IF YOU AREN'T BLAZE CHANGE THIS
     bulletA.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
     bulletA.HorizontalSpeed(rand()%100 +300 );
@@ -97,16 +81,16 @@ int main()
     std::vector<std::unique_ptr<Bullet>> bulletsA;  //ALL ALLY BULLETS GO HERE
     bulletsA.emplace_back(std::make_unique<Bullet>(bulletA));
 
-    ///MUSIC______________
+///MUSIC______________
     sf::Music music;
     if (!music.openFromFile("DigitalOne.ogg"))
         return -1; // error
     music.play();
     music.setLoop(1);
     music.setVolume(50);
-    ///__________________________
+///__________________________
 
-    ///SFX
+///SFX
     // To play SFX anywhere, just put down:
     // "play.(name of the sound variable)() in the if or while statement.
 
@@ -141,7 +125,7 @@ int main()
     sf::Sound gameoverSound;
     gameoverSound.setBuffer(buffer4);
     gameoverSound.setVolume(40); //Use this to set the volume (0-100)
-    ///__________________________
+///__________________________
 
     int b =0;
 
@@ -150,7 +134,6 @@ int main()
         window.setFramerateLimit(60);
         srand(time(NULL));
         sf::Time elapsed = clock.restart();
-
 
 
         //CALCULATE ROTATION FOLLOWING MOUSE
@@ -163,7 +146,7 @@ int main()
 
 
         //ANGLE OF ROTATION
-        float angle=90+atan2(rotation.y,rotation.x)*180/3.1415;
+        float angle = 90+atan2(rotation.y,rotation.x)*180/3.1415;
         player.setRotation(angle);
         crosshead.setPosition(MouseCoord);
 
@@ -172,9 +155,8 @@ int main()
         else
             window.setMouseCursorVisible(false);
 
-//        emptyVector(bulletsE);
 
-        ///MOVEMENT SECTION
+///MOVEMENT SECTION
         //we use different ifs so we can move diagonally
         //outside of Events to move smoothly
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -207,7 +189,7 @@ int main()
         }
 
         player.DoMove(elapsed,dir);
-        ///END OF MOVEMENT SECTION
+///__________________________
 
         if (b==100){            //every 100 frames, spawn another bullet
             bulletE.HorizontalSpeed(rand()%100 +300 );
@@ -220,6 +202,10 @@ int main()
         else {
             b++;
         }
+        //emptyVector(bulletsE);
+
+
+
 
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
@@ -259,23 +245,35 @@ int main()
               }
         }
 
+        /// ITERATE OVER BULLETS OUTSIDE THE WINDOW AND DELETE THEM
+
+        for (auto i = bulletsA.begin(); i != bulletsA.end();)
+            {
+                if  (((**i).getPosition().y<= 0 || (**i).getPosition().y >= (**i).down_edge)||
+                     ((**i).getPosition().x <= 0 || (**i).getPosition().x >= (**i).right_edge)){
+                    bulletsA.erase(i);
+                }
+                else
+                    i++;          //advance in the vector
+            }
+        ///__________________________
 
         // clear the window with black color
         window.clear(sf::Color::Black);
-        ///Draw Background
-        window.draw(back);
 
-        ///DRAW ENEMY BULLETS
+
+
+///DRAW ENEMY BULLETS
         for(auto &i:bulletsE){
             (*i).Move(elapsed);
             (*i).ifEdge(sf::Vector2f(window.getSize()));
             (*i).Animate(elapsed);
             window.draw(*i);
          }
-        ///DRAW PLAYER UNDER ENEMY BULLETS
+///DRAW PLAYER UNDER ENEMY BULLETS
         window.draw(player);
 
-        ///DRAW ALLY BULLETS
+///DRAW ALLY BULLETS
         for(auto &i:bulletsA){
             (*i).Move(elapsed);
             (*i).Animate(elapsed);
