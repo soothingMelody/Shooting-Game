@@ -40,7 +40,12 @@ int main()
         std::cerr << "Could not load texture" << std::endl;
     crosshead.setTexture(crossTXT);
     crosshead.setOrigin(crosshead.getTextureRect().width/2,crosshead.getTextureRect().height/2);
-
+        //maybe change mouse icon instead
+    sf::Cursor cursor;
+   // cursor.loadFromPixels("crosshead.png",sf::Vector2f(1,1),
+                          //sf::Vector2f(crossTXT.getSize().x/2,crossTXT.getSize().y/2));
+    if (cursor.loadFromSystem(sf::Cursor::Arrow))
+        window.setMouseCursor(cursor);
 
 ///TO ITERATE OVER BULLETS AND DELETE THEM
 //    std::vector<std::unique_ptr<int>> v;
