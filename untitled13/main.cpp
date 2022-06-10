@@ -202,7 +202,8 @@ int main()
 
 
 ///PLAYER ANIMATION
-       if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)||sf::Keyboard::isKeyPressed(sf::Keyboard::S)||sf::Keyboard::isKeyPressed(sf::Keyboard::A)||sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+       if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)||sf::Keyboard::isKeyPressed(sf::Keyboard::S)||
+               sf::Keyboard::isKeyPressed(sf::Keyboard::A)||sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
            player.addAnimationFrame(sf::IntRect(73, 0, 79, 79));
            player.addAnimationFrame(sf::IntRect(73, 0, 79, 79));
            player.addAnimationFrame(sf::IntRect(73, 0, 79, 79));
@@ -278,7 +279,19 @@ int main()
         }
 
 /// BULLETS HIT THE PLAYER, TAKE A LIVE AND DESTROY
-
+        for(auto i = bulletsE.begin(); i != bulletsE.end();)
+        {
+            //if player's bullets hit enemy bullets
+            if((**i).getGlobalBounds().intersects(player.getGlobalBounds()))
+            {
+                bulletsE.erase(i);
+                player.lives--;
+            }
+            else
+            {
+                i++;
+            }
+        }
  //        for (auto j = bulletsA.begin(); j != bulletsA.end();)
 //        {
 //            for(auto i = bulletsE.begin(); i != bulletsE.end();)
