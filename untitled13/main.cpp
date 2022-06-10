@@ -199,6 +199,28 @@ int main()
         }
 
         player.DoMove(elapsed,dir);
+
+
+///PLAYER ANIMATION
+       if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)||sf::Keyboard::isKeyPressed(sf::Keyboard::S)||sf::Keyboard::isKeyPressed(sf::Keyboard::A)||sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+           player.addAnimationFrame(sf::IntRect(73, 0, 79, 79));
+           player.addAnimationFrame(sf::IntRect(73, 0, 79, 79));
+           player.addAnimationFrame(sf::IntRect(73, 0, 79, 79));
+           player.addAnimationFrame(sf::IntRect(160, 0, 79, 79));
+           player.addAnimationFrame(sf::IntRect(160, 0, 79, 79));
+           player.addAnimationFrame(sf::IntRect(160, 0, 79, 79));
+           std::cout << "idzie" << ' ';
+       }
+       else{
+           player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
+           player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
+           player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
+           player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
+           player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
+           player.addAnimationFrame(sf::IntRect(0, 0, 79, 79));
+           std::cout << "stoi" << ' ';
+
+       }
 ///__________________________
 
         if (b==100){            //every 100 frames, spawn another bullet
@@ -280,6 +302,7 @@ int main()
             window.draw(*i);
          }
 ///DRAW PLAYER UNDER ENEMY BULLETS
+        player.Animate(elapsed);
         window.draw(player);
 
 ///DRAW ALLY BULLETS
@@ -288,6 +311,7 @@ int main()
             (*i).Animate(elapsed);
             window.draw(*i);
          }
+
 
         window.draw(crosshead);
 
