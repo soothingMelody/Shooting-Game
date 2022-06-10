@@ -1,10 +1,4 @@
-#include <iostream>
 #import "game.cpp"
-#include <math.h>
-#include <stdlib.h>
-#include <vector>
-#include <memory>
-
 
 using namespace std;
 
@@ -55,7 +49,7 @@ int main()
 ///__________________________
 
 ///BULLETS ENEMY
-    Bullet bulletE("bulletSpriteSheet.png");    ///IF YOU AREN'T BLAZE CHANGE THIS
+    Bullet bulletE("bulletSpriteSheet.png");
     bulletE.setWindowBounds(0, window.getSize().y, 0, window.getSize().x);
     bulletE.HorizontalSpeed(rand()%100 +500 );
     bulletE.VerticalSpeed(rand()%100 +500 );
@@ -119,9 +113,6 @@ int main()
 ///__________________________
 
 ///SFX
-    // To play SFX anywhere, just put down:
-    // "play.(name of the sound variable)() in the if or while statement.
-
     //Firing Sound - for firing the player's cannon.
     sf::SoundBuffer buffer;
     if (!buffer.loadFromFile("fire.ogg"))
