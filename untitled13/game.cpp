@@ -124,7 +124,26 @@ public:
         setTexture(texture_);
     }
 };
-
+///TO ITERATE OVER BULLETS AND DELETE THEM
+void emptyVector(std::vector<std::unique_ptr<Bullet>> v)
+{
+    for (auto i = v.begin(); i != v.end();)
+    {
+        std::cerr<<(*(*i.base())).getPosition().x;
+//        if  <= 0 || down >= screenSize.y){
+//            speedY = speedY*-1;
+//        }
+//        if (left <= 0 || right >= screenSize.x){
+//            speedX = speedX*-1;
+//        }                        //or compare *i with make_unique<int>(2)
+//            v.erase(i);
+//        }
+//        else
+//        {
+//            i++;          //advance in the vector
+//        }
+    }
+}
 
 
 

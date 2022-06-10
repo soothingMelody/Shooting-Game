@@ -48,19 +48,7 @@ int main()
 
 
 
-///TO ITERATE OVER BULLETS AND DELETE THEM
-//    std::vector<std::unique_ptr<int>> v;
-//    for (auto i = v.begin(); i != v.end();)
-//    {
-//        if(**i>(2))       //pointer to the pointer gives the value
-//        {                         //or compare *i with make_unique<int>(2)
-//            v.erase(i);
-//        }
-//        else
-//        {
-//            i++;          //advance in the vector
-//        }
-//    }
+
 //The bullets should check individually if they collide with the player,
 //take it out of the vector and take away a life
 
@@ -79,8 +67,8 @@ int main()
     bulletE.addAnimationFrame(sf::IntRect(12, 12, 10, 10));
     bulletE.addAnimationFrame(sf::IntRect(12, 12, 10, 10));
 
-    std::vector<Bullet> bulletsE;  //ALL ENEMY BULLETS GO HERE
-    bulletsE.emplace_back(bulletE);
+    std::vector<std::unique_ptr<Bullet>> bulletsE;  //ALL ENEMY BULLETS GO HERE
+    bulletsE.emplace_back(std::make_unique<Bullet>(bulletE));
 
     ///BULLETS ALLY
     Bullet bulletA("bulletSpriteSheet.png");        ///IF YOU AREN'T BLAZE CHANGE THIS
@@ -97,8 +85,8 @@ int main()
     bulletA.addAnimationFrame(sf::IntRect(12, 0, 10, 10));
     bulletA.addAnimationFrame(sf::IntRect(12, 0, 10, 10));
 
-    std::vector<Bullet> bulletsA;  //ALL ALLY BULLETS GO HERE
-    bulletsA.emplace_back(bulletA);
+    std::vector<std::unique_ptr<Bullet>> bulletsA;  //ALL ALLY BULLETS GO HERE
+    bulletsA.emplace_back(std::make_unique<Bullet>(bulletA));
 
     ///MUSIC______________
     sf::Music music;
@@ -174,7 +162,7 @@ int main()
         else
             window.setMouseCursorVisible(false);
 
-
+//        emptyVector(bulletsE);
 
         ///MOVEMENT SECTION
         //we use different ifs so we can move diagonally
@@ -211,13 +199,12 @@ int main()
         player.DoMove(elapsed,dir);
         ///END OF MOVEMENT SECTION
 
-        if (b==100){
-            Bullet bullet1 = bulletE;
+        if (b==100){            //every 100 frames, spawn another bullet
             bulletE.HorizontalSpeed(rand()%100 +300 );
             bulletE.VerticalSpeed(rand()%100 +300 );
 
-            bulletsE.emplace_back(bullet1);
-            bullet1.setPosition(10,10);
+            bulletsE.emplace_back(std::make_unique<Bullet>(bulletE));
+            bulletE.setPosition(10,10);
             b=0;
         }
         else {
@@ -257,7 +244,7 @@ int main()
                       bulletA.setPosition(player.getPosition());
                       shootSound.play();
 
-                      bulletsA.emplace_back(bulletA);
+                      bulletsA.emplace_back(std::make_unique<Bullet>(bulletA));;
                   }
               }
         }
@@ -270,19 +257,19 @@ int main()
 
         ///DRAW ENEMY BULLETS
         for(auto &i:bulletsE){
-            i.Move(elapsed);
-            i.ifEdge(sf::Vector2f(window.getSize()));
-            i.Animate(elapsed);
-            window.draw(i);
+            (*i).Move(elapsed);
+            (*i).ifEdge(sf::Vector2f(window.getSize()));
+            (*i).Animate(elapsed);
+            window.draw(*i);
          }
         ///DRAW PLAYER UNDER ENEMY BULLETS
         window.draw(player);
 
         ///DRAW ALLY BULLETS
         for(auto &i:bulletsA){
-            i.Move(elapsed);
-            i.Animate(elapsed);
-            window.draw(i);
+            (*i).Move(elapsed);
+            (*i).Animate(elapsed);
+            window.draw(*i);
          }
 
         window.draw(crosshead);
